@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="expires" content="-1">
+<meta http-equiv="Pragma" content="no-cache">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Welcome to smartfarm!">
+<meta th:name="_csrf" th:content="${_csrf.token}"/>
+<meta th:name="_csrf_header" th:content="${_csrf.headerName}"/>
+<title>
+	<th:block layout:fragment="f-title">SmartFarm 로그인</th:block>
+</title>
+
+<link rel="shortcut icon" th:href="@{/static/img/gift.png}">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<style type="text/css">
+body {
+	color: #73879C;
+	background: #f7f7f7;
+	font-family: "Helvetica Neue", Roboto, Arial, "Droid Sans", sans-serif;
+	font-size: 13px;
+	font-weight: 400;
+	line-height: 1.471;
+}
+
+.login_wrapper {
+	max-width: 350px;
+	position: relative;
+}
+
+.form-control, .btn {
+	font-size: 14px;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, .075);
+}
+
+section {
+	margin: 0 auto;
+	position: relative;
+	text-align: center;
+	text-shadow: 0 1px 0 #fff;
+	min-width: 280px;
+}
+
+section h1 {
+	letter-spacing: -0.05em;
+	line-height: 20px;
+	margin: 10px 0 30px;
+	font-size: 20px;
+	font-weight: 600;
+}
+
+section div {
+	margin-bottom: 15px;
+}
+
+hr.separator {
+	border-top: 1px solid #d8d8d8;
+	margin: 30px 0px; 
+}
+
+.btn-success {
+	background: #26b99a;
+	border: 1px solid #169f85;
+}
+
+.btn-success:hover, .btn-success:focus, .btn-success:active,
+.btn-success.active, .open .dropdown-toggle.btn-success {
+	background: #169f85;
+}
+input:required {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.54);
+}
+</style>
+
+</head>
+
+<body>
+	<section layout:fragment="f-content"></section>		
+
+	<th:block th:insert="cmm/block :: f-footer"></th:block>
+	<script>
+	$("#btn_loginHome").on("click", function() {
+		location.href = "[[@{/login}]]";
+	});
+	</script>
+	<th:block layout:fragment="f-script"></th:block>
+</html>

@@ -1,0 +1,75 @@
+spring:
+  application:
+    name: smartfarm
+  profiles:
+    active: prod
+  datasource:
+    jdbcUrl: jdbc:mariadb://192.168.0.53:3306/sedar_db
+    driver-class-name: org.mariadb.jdbc.Driver
+    username: sedar_user
+    password: test1234
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties:
+      hibernate:
+        format_sql: true
+        implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+        hbm2ddl.auto: update
+    open-in-view: false
+    show-sql: true
+  jackson:
+    serialization:
+      fail-on-empty-beans: false
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Seoul
+  mvc:
+    static-path-pattern: /static/**
+  thymeleaf:
+    mode: HTML
+    encoding: UTF-8
+    check-template-location: true
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+  resources:
+    static-locations:
+      - classpath:/static/
+    cache:
+      period: 0
+server:
+  port: 8989
+  servlet:
+    context-path: /
+  tomcat:
+    basedir: .
+    remote-ip-header: X-Forwarded-For
+    protocol-header: X-Forwarded-Proto
+    accesslog:
+      enabled: true
+      directory: logs
+      pattern: '%{yyyy-MM-dd HH:mm:ss}t %{X-Forwarded-For}i(%h) %l %u "%r" %s %b'
+  use-forward-headers: true
+logging:
+  file: logs/smartfarm.log
+  exception-conversion-word: '%wEx'
+  pattern:
+    console: '%d{yyyy-MM-dd HH:mm:ss.SSS} %clr(${LOG_LEVEL_PATTERN:-%5p}){green} %clr([%22thread]){magenta} %clr(%-40.40logger{39}){cyan} %clr(: %m%n${LOG_EXCEPTION_CONVERSION_WORD:-%wEx}){faint}'
+  level:
+    web: debug
+#    org.hibernate.SQL: debug
+springdoc:
+  api-docs:
+    path: /api-docs
+  default-consumes-media-type: application/json
+  default-produces-media-type: application/json
+  swagger-ui:
+    operations-sorter: alpha
+    tags-sorter: alpha
+    path: /swagger-ui.html
+    disable-swagger-default-url: true
+    display-query-params-without-oauth2: true
+  paths-to-match:
+    - /api/v1/**
+    - /test/**
+    - /token
