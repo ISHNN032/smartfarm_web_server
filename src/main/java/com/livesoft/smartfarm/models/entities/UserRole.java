@@ -26,33 +26,34 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Getter @Setter
+@Getter
+@Setter
 @Entity
-@Table(name = "user_role", uniqueConstraints = {@UniqueConstraint(columnNames = {"user_id", "role_name"})})
+@Table(name = "user_role", uniqueConstraints = { @UniqueConstraint(columnNames = { "user_id", "role_name" }) })
 @DynamicUpdate
 public class UserRole extends BaseEntity implements Serializable, GrantedAuthority {
-	
+
 	private static final long serialVersionUID = 7943607393308984161L;
-	
+
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_id", nullable = false, foreignKey = @ForeignKey(name = "FK_USER_ROLE_USER"))
 	private User user;
-	
-	@Column(name="role_name", nullable=false, length = 20)
+
+	@Column(name = "role_name", nullable = false, length = 20)
 	@Enumerated(EnumType.STRING)
 	private RoleType roleName;
-	
+
 	public enum RoleType {
 		ROLE_ADMIN, ROLE_VIEW
 	}
-	
+
 	@Builder
 	public UserRole(User user, RoleType roleName) {
 		this.user = user;
 		this.roleName = roleName;
-	}	
-	
+	}
+
 	@JsonIgnore
 	@Override
 	public String getAuthority() {
@@ -63,5 +64,5 @@ public class UserRole extends BaseEntity implements Serializable, GrantedAuthori
 	public String getSimple() {
 		return roleName.name();
 	}
-	
+
 }

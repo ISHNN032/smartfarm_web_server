@@ -26,18 +26,18 @@ public abstract class BaseEntity implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(updatable = false, nullable = false, columnDefinition = "INT(11)")
+	@Column(updatable = false, nullable = false)
 	private Long id;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(updatable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
+	@Column(updatable = false)
 	private Date createTimestamp;
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@Column(nullable = true, columnDefinition = "TIMESTAMP DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP")
+	@Column(nullable = true)
 	private Date updateTimestamp;	
 
-	@Column(nullable = false, columnDefinition = "TINYINT(1) DEFAULT 0")
+	@Column(nullable = false)
 	private boolean del;	
 	
 	@PrePersist
