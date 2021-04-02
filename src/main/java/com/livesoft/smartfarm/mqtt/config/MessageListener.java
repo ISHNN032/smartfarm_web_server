@@ -14,7 +14,7 @@ public class MessageListener implements Runnable{
 	@Override
 	public void run() {
 		while(true) {
-			subscriber.subscribeMessage("demoTopic2017");
+			subscriber.subscribeMessage("nct2con0000");
 		}
 		
 	}
