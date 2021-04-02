@@ -4,18 +4,26 @@ spring:
   profiles:
     active: local
   datasource:
-    jdbcUrl: jdbc:mariadb://192.168.0.53:3306/sedar_db
-    driver-class-name: org.mariadb.jdbc.Driver
-    username: sedar_user
-    password: test1234
+    hikari:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: 'jdbc:mysql://localhost:3306/smartfarm?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC&tinyInt1isBit=false'
+      username: root
+      password: 1234
+      auto-commit: false
+      connection-test-query: SELECT 1
+      minimum-idle: 10
+      maximum-pool-size: 50
+      transaction-isolation: TRANSACTION_READ_UNCOMMITTED
+      pool-name: pool-smartfarm
   jpa:
-    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    database-platform: org.hibernate.dialect.MariaDB103Dialect
     properties:
       hibernate:
         format_sql: true
         implicit_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
         physical_naming_strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
         hbm2ddl.auto: update
+        globally_quoted_identifiers: true
     open-in-view: false
     show-sql: true
   jackson:
