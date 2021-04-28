@@ -30,9 +30,10 @@
 		<div class="collapse navbar-collapse" id="nav_menu_area">
 			<ul class="navbar-nav" id="nav_menu" style="margin: 0 auto; width: 1140px;">
 				<li class='nav-item'  th:classappend="${currentPage eq 'home'} ? 'active' : ''" th:attr="data-href=@{/v}">홈</li>
+				<li class='nav-item' th:classappend="${currentPage eq 'store'} ? 'active' : ''" th:attr="data-href=@{/v/stores}">농장</li>
+				<li class='nav-item'  th:classappend="${currentPage eq 'controller'} ? 'active' : ''" th:attr="data-href=@{/v/controllers}">컨트롤러</li>
 				<li class='nav-item'  th:classappend="${currentPage eq 'sensor'} ? 'active' : ''" th:attr="data-href=@{/v/sensors}">센서</li>
 				<li sec:authorize="hasRole('ROLE_ADMIN')" class='nav-item' th:classappend="${currentPage eq 'user'} ? 'active' : ''" th:attr="data-href=@{/v/users}">회원</li>
-				<li class='nav-item' th:classappend="${currentPage eq 'store'} ? 'active' : ''" th:attr="data-href=@{/v/stores}">농장</li>
 			</ul>
 		</div>
 	</nav>
