@@ -41,7 +41,7 @@ public class WebAccessDeniedHandler implements AccessDeniedHandler {
 					}
 				} else {
 					req.setAttribute("msg", "로그인 권한이 없는 아이디입니다.");
-					req.setAttribute("nextPage", "/v/login");
+					req.setAttribute("nextPage", "/#/login");
 					res.setStatus(HttpStatus.UNAUTHORIZED.value());
 					SecurityContextHolder.clearContext();
 				}

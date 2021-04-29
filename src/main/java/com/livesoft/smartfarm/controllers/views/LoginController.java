@@ -31,15 +31,15 @@ public class LoginController {
 				return "redirect:/v";
 			}
 		}
-		return "redirect:/v/login";
+		return "redirect:/#";
 	}
 
-	@GetMapping(value = "/v/login")
+	@GetMapping(value = "/#/login")
 	public String login(@AuthenticationPrincipal SecurityUser securityUser) {
 		if (securityUser != null && securityUser.getRoleTypes().contains(RoleType.ROLE_VIEW)) {
 			return "redirect:/v";
 		}
-		return "login/v/login";
+		return "login/#/login";
 	}
 
 	@RequestMapping(value = "/err/denied-page")
