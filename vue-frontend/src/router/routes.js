@@ -13,7 +13,7 @@ import Notifications from "@/pages/Settings.vue";
 
 const routes = [
   {
-    path: "/",
+    path: "/v/",
     component: DashboardLayout,
     redirect: "/dashboard",
     children: [
@@ -23,7 +23,7 @@ const routes = [
         component: Dashboard
       },
       {
-        path: "stats",
+        path: "login",
         name: "admin",
         component: UserProfile
       },
