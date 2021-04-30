@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="cmm/layout">
+
+<th:block layout:fragment="f-title">센서데이터 조회</th:block>
+
+<section layout:fragment="f-content">
+	<div class="container">
+		<div class="d-title">
+			<h2>센서데이터 조회</h2>
+		</div>
+		<div class="d-content">
+			<div class="row">
+				<div class="table-responsive">
+					<table class="table table-striped">
+						<thead>
+							<tr class="text-center">
+								<th width="10%">아이디</th>
+								<th width="35%">상태</th>
+								<th width="25%">값</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr class="text-center" th:object="${sdata}" th:each="sdata: ${sdatas}" th:attr="data-href=@{/v/sdatas/__${sdata.id}__}">
+								<td th:text="*{ id }"></td>
+								<td th:text="*{ state }"></td>
+								<td th:text="*{ value }"></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<th:block layout:fragment="f-script">
+
+</th:block>
