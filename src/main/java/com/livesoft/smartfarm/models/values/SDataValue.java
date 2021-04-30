@@ -4,7 +4,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
-@Schema(description = "센서")
+@Schema(description = "센서데이터")
 @Getter
 @Setter
 public class SDataValue {

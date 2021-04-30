@@ -26,21 +26,16 @@ public class SDataService {
 
 	@Transactional
 	public void save(SDataValue value) {
-		SData sdata = SData.builder()._id(value.get_id()).name(value.getName()).tableName(value.getTableName())
-				.dataType(value.getDataType()).build(); // ->
+		SData sdata = SData.builder().state(value.getState()).value(value.getValue()).build();
 		sdataRepository.save(sdata); // user
 	}
 
 	@Transactional
 	public void patch(SData sdata, SDataValue value) {
-		if (StringUtils.isNotBlank(Integer.toString(value.get_id())))
-			sdata.set_id(value.get_id());
-		if (StringUtils.isNotBlank(value.getName()))
-			sdata.setName(value.getName());
-		if (StringUtils.isNotBlank(value.getTableName()))
-			sdata.setTableName(value.getTableName());
-		if (StringUtils.isNotBlank(value.getDataType()))
-			sdata.setDataType(value.getDataType());
+		if (StringUtils.isNotBlank(Integer.toString(value.getState())))
+			sdata.setState(value.getState());
+		if (StringUtils.isNotBlank(Float.toString(value.getValue())))
+			sdata.setValue(value.getValue());
 	}
 
 	@Transactional

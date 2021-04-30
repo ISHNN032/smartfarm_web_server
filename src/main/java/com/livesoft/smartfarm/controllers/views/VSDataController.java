@@ -21,7 +21,7 @@ public class VSDataController {
 
 	@GetMapping("")
 	public String selectSDatas(Model model,
-			@PageableDefault(page = 0, size = 5, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
+			@PageableDefault(page = 0, size = 101, sort = "id", direction = Sort.Direction.DESC) Pageable pageable) {
 		model.addAttribute("sdatas", sdataService.findAll(pageable));
 		model.addAttribute("currentPage", "sdata");
 		return "content/sdata";

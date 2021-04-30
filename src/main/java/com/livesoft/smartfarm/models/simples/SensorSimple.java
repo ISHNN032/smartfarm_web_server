@@ -28,6 +28,7 @@ public class SensorSimple {
 
 	@Builder
 	public SensorSimple(Long id, int _id, int contId, String name, String tableName, String dataType) {
+		this.id = id;
 		this._id = _id;
 		this.contId = contId;
 		this.name = name;
