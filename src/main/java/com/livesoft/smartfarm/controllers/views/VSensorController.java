@@ -12,7 +12,7 @@ import com.livesoft.smartfarm.services.SensorService;
 
 import lombok.RequiredArgsConstructor;
 
-@RequestMapping("/v/sensors")
+@RequestMapping("/#/sensors")
 @RequiredArgsConstructor
 @Controller
 public class VSensorController {

@@ -21,52 +21,52 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Controller
 public class LoginController {
-	
+
 	private final UserService userService;
-		
+
 	@GetMapping(value = "/")
-	public String index(@AuthenticationPrincipal SecurityUser securityUser){
-		if(securityUser != null) {
-			if(securityUser.getRoleTypes().contains(RoleType.ROLE_VIEW)) {
-				return "redirect:/v";
+	public String index(@AuthenticationPrincipal SecurityUser securityUser) {
+		if (securityUser != null) {
+			if (securityUser.getRoleTypes().contains(RoleType.ROLE_VIEW)) {
+				return "redirect:/#";
 			}
 		}
 		return "redirect:/login";
 	}
-	
+
 	@GetMapping(value = "/login")
-	public String login(@AuthenticationPrincipal SecurityUser securityUser){
-		if(securityUser != null && securityUser.getRoleTypes().contains(RoleType.ROLE_VIEW)) {
-			return "redirect:/v";
+	public String login(@AuthenticationPrincipal SecurityUser securityUser) {
+		if (securityUser != null && securityUser.getRoleTypes().contains(RoleType.ROLE_VIEW)) {
+			return "redirect:/#";
 		}
 		return "login/login";
 	}
-	
+
 	@RequestMapping(value = "/err/denied-page")
-	public String accessDenied(){
+	public String accessDenied() {
 		return "err/deniedPage";
 	}
-	
+
 	@GetMapping(value = "/join")
-	public String joinForm(@AuthenticationPrincipal SecurityUser securityUser){
-		if(securityUser != null && securityUser.getRoleTypes().contains(RoleType.ROLE_VIEW)) {
-			return "redirect:/v";
+	public String joinForm(@AuthenticationPrincipal SecurityUser securityUser) {
+		if (securityUser != null && securityUser.getRoleTypes().contains(RoleType.ROLE_VIEW)) {
+			return "redirect:/#";
 		}
 		return "login/join";
 	}
-	
+
 	@ResponseBody
 	@PostMapping(value = "/join")
-	public Map<String, Object> join(@RequestBody UserValue value){
+	public Map<String, Object> join(@RequestBody UserValue value) {
 		Map<String, Object> response = new HashMap<>();
-		
-		if(userService.existsByEmail(value.getEmail())) {
+
+		if (userService.existsByEmail(value.getEmail())) {
 			response.put("duplicate", true);
 			return response;
 		}
-		
+
 		response.put("success", userService.join(value) != null ? true : false);
 		return response;
 	}
-	
+
 }
