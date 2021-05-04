@@ -12,13 +12,10 @@
     "build": "node build/build.js"
   },
   "dependencies": {
-    "core-js": "^3.6.5",
-    "vue": "^3.0.0"
-  },
-  "dependencies": {
     "bootstrap": "^4.0.0",
     "chartist": "^0.11.0",
     "es6-promise": "^4.2.4",
+    "request": "^2.88.2",
     "vue": "^2.6.10",
     "vue-clickaway": "^2.1.0",
     "vue-notifyjs": "^0.3.0",
