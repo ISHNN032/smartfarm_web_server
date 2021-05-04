@@ -28,18 +28,18 @@ public class LoginController {
 	public String index(@AuthenticationPrincipal SecurityUser securityUser) {
 		if (securityUser != null) {
 			if (securityUser.getRoleTypes().contains(RoleType.ROLE_VIEW)) {
-				return "redirect:/#";
+				return "redirect:/v";
 			}
 		}
-		return "redirect:/login";
+		return "redirect:/#";
 	}
 
-	@GetMapping(value = "/login")
+	@GetMapping(value = "/#/login")
 	public String login(@AuthenticationPrincipal SecurityUser securityUser) {
 		if (securityUser != null && securityUser.getRoleTypes().contains(RoleType.ROLE_VIEW)) {
-			return "redirect:/#";
+			return "redirect:/v";
 		}
-		return "login/login";
+		return "login/#/login";
 	}
 
 	@RequestMapping(value = "/err/denied-page")
@@ -50,7 +50,7 @@ public class LoginController {
 	@GetMapping(value = "/join")
 	public String joinForm(@AuthenticationPrincipal SecurityUser securityUser) {
 		if (securityUser != null && securityUser.getRoleTypes().contains(RoleType.ROLE_VIEW)) {
-			return "redirect:/#";
+			return "redirect:/v";
 		}
 		return "login/join";
 	}

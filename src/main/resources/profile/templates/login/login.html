@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko" 
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorator="cmm/layout_login">
+
+<section layout:fragment="f-content">
+	<div class="login_wrapper" style="margin: calc(50vh - 193px) auto 0px;">
+		<h1>SmartFarm</h1>
+		<form method="post" th:action="@{/#/login}">
+			<div>
+				<input type="text" name="email" class="form-control" placeholder="email" autocomplete="off" required/>
+			</div>
+			<div style="margin-bottom: 50px;">
+				<input type="password" name="password" class="form-control" placeholder="Password" autocomplete="off" required/>
+			</div>
+			<div>
+				<button type="button" class="btn btn-info btn-large form-control" id="btn_login">Login</button>
+			</div>
+			<div>
+				<button type="button" class="btn btn-secondary btn-large form-control" id="btn_joinForm">Join</button>
+			</div>
+		</form>
+		<hr class="separator"/>
+		<div>
+			<h1>SmartFarm</h1>
+			<p>©2021 All Rights Reserved.</p>
+		</div>
+	</div>
+</section>
+
+<th:block layout:fragment="f-script">
+<script>
+$(function() {
+	$(document.body).delegate(":input", "keyup", function (e) {
+		if (e.which == 13)
+			$("#btn_login").trigger("click");
+	});
+	
+	$("#btn_login").on("click", function() {
+		var email = $("input[name='email']").val(), password = $("input[name='password']").val();
+		if (email == "") {
+			alert("사용자이름을 입력하세요");
+			return false;
+		} else if (password == "") {
+			alert("비밀번호를 입력하세요");
+			return false;
+		}
+		$(this).closest("form").submit();
+	});
+	
+	$("#btn_joinForm").on("click", function() {
+		location.href = "[[@{/join}]]";
+	});
+});
+</script>
+</th:block>
