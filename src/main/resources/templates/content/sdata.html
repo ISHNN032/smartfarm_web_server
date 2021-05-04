@@ -17,7 +17,8 @@
 					<table class="table table-striped">
 						<thead>
 							<tr class="text-center">
-								<th width="10%">아이디</th>
+								<th width="15%">번호</th>
+								<th width="25%">시간</th>
 								<th width="35%">상태</th>
 								<th width="25%">값</th>
 							</tr>
@@ -25,6 +26,7 @@
 						<tbody>
 							<tr class="text-center" th:object="${sdata}" th:each="sdata: ${sdatas}" th:attr="data-href=@{/v/sdatas/__${sdata.id}__}">
 								<td th:text="*{ id }"></td>
+								<td th:text="*{ createTimestamp }"></td>
 								<td th:text="*{ state }"></td>
 								<td th:text="*{ value }"></td>
 							</tr>
