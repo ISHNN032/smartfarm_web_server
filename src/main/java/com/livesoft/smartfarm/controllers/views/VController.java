@@ -7,11 +7,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import lombok.RequiredArgsConstructor;
 
-@RequestMapping("/v")
+@RequestMapping("/#")
 @RequiredArgsConstructor
 @Controller
 public class VController {
-	
+
 	@GetMapping("")
 	public String main(Model model) {
 		model.addAttribute("currentPage", "home");
