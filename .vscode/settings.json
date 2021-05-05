@@ -1,4 +1,7 @@
 {
     "java.configuration.updateBuildConfiguration": "interactive",
-    "liveServer.settings.port": 5501
+    "liveServer.settings.port": 5501,
+    "eslint.workingDirectories": [
+        "./vue-frontend"
+    ]
 }
