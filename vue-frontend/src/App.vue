@@ -6,18 +6,6 @@
 </template>
 
 <script>
-import request from "request"
-
-export default {
-  mounted() {
-    request('http://localhost:8080/v/sensors', function(error, response, body){
-      window.console.log('error:', error);
-      window.console.log('statusCode:', response && response.statusCode);
-      window.console.log('body:', body);
-    });
-  }
-}
-
 </script>
 
 <style lang="scss">

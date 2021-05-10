@@ -1,39 +1,37 @@
 <template>
-    <div class="row">
-      <section layout:fragment="f-content">
-        <div class="container">
-          <div class="d-title">
-            <h2>농장 조회</h2>
-          </div>
-          <div class="d-content">
-            <div class="row">
-              <div class="table-responsive">
-                <table class="table table-striped">
-                  <thead>
-                    <tr class="text-center">
-                      <th width="10%">아이디</th>
-                      <th width="35%">이름</th>
-                      <th width="25%">농장 분류</th>
-                      <th width="20%">가입일시</th>
-                      <th width="10%">삭제여부</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr class="text-center" th:object="${store}" th:each="store: ${stores}" th:attr="data-href=@{/v/stores/__${store.id}__}">
-                      <td th:text="*{ id }"></td>
-                      <td th:text="*{ name }"></td>
-                      <td th:text="*{ storeBusiness }"></td>
-                      <td th:text="*{ createTimestamp }"></td>
-                      <td th:text="*{ del ? 'Y' : 'N' }"></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
+  <section layout:fragment="f-content">
+    <div class="container">
+      <div class="d-title">
+        <h2>센서데이터 조회</h2>
+      </div>
+      <div class="d-content">
+        <div class="row">
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr class="text-center">
+                  <th width="15%">번호</th>
+                  <th width="25%">시간</th>
+                  <th width="35%">상태</th>
+                  <th width="25%">값</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="text-center" th:object="${sdata}" th:each="sdata: ${sdatas}" th:attr="data-href=@{/v/sdatas/__${sdata.id}__}">
+                  <td th:text="*{ id }"></td>
+                  <td th:text="*{ createTimestamp }"></td>
+                  <td th:text="*{ state }"></td>
+                  <td th:text="*{ value }"></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </div>
-      </section>
-      <!-- <div class="col-12">
+      </div>
+    </div>
+  </section>
+    <!-- <div class="row">
+      <div class="col-12">
         <card :title="table1.title" :subTitle="table1.subTitle">
           <div slot="raw-content" class="table-responsive">
             <paper-table :data="table1.data" :columns="table1.columns">
@@ -52,12 +50,12 @@
             </paper-table>
           </div>
         </card>
-      </div> -->
-
-    </div>
+      </div>
+    </div> -->
 </template>
 <script>
 import { PaperTable } from "@/components";
+import request from "request";
 const tableColumns = ["Id", "Name", "Salary", "Country", "City"];
 const tableData = [
   {
@@ -116,6 +114,11 @@ export default {
         data: [...tableData]
       }
     };
+  },
+  mounted() {
+      request('http://localhost:8080/smartfarm-1.0.0/v/sdatas', function(error, response, body){
+        window.console.log('body:', body);
+      });
   }
 };
 </script>
