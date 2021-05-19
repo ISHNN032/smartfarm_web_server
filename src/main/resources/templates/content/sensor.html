@@ -25,7 +25,7 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr class="text-center" th:object="${sensor}" th:each="sensor: ${sensors}" th:attr="data-href=@{/#/sensors/__${sensor.id}__}">
+							<tr class="text-center" th:object="${sensor}" th:each="sensor: ${sensors}" th:attr="data-href=@{/v/sensors/__${sensor.id}__}">
 								<td th:text="*{ _id }"></td>
 								<td th:text="*{ contId }"></td>
 								<td th:text="*{ name }"></td>
