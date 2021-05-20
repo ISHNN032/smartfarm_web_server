@@ -37,7 +37,7 @@ export default {
     Button
   },
   data() {
-    request("http://localhost:8080/smartfarm-1.0.0/api/temps", this.get);
+    request("http://localhost:8080/smartfarm-1.0.0/api/sdatas", this.get);
     return {
       table1: {
         title: "inji001",
