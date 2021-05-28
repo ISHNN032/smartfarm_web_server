@@ -113,6 +113,7 @@
 <script>
 import { StatsCard, ChartCard } from "@/components/index";
 import Chartist from "chartist";
+import request from "request";
 import SensorTable from "../components/SensorTable.vue";
 export default {
   components: {
@@ -124,13 +125,16 @@ export default {
    * Chart data used to render stats, charts. Should be replaced with server data
    */
   data() {
+    request("http://localhost:8080/smartfarm-1.0.0/api/temp", this.gettemp);
+    request("http://localhost:8080/smartfarm-1.0.0/api/solar", this.getsolar);
+        request("http://localhost:8080/smartfarm-1.0.0/api/winds", this.getwindspeed);
     return {
       statsCards: [
         {
           type: "warning",
           icon: "ti-check",
           title: "외부온도",
-          value: "10.4°C",
+          value: "0°C",
           footerText: "방금 전",
           footerIcon: "ti-reload",
         },
@@ -138,32 +142,32 @@ export default {
           type: "success",
           icon: "ti-check",
           title: "외부습도",
-          value: "23%",
-          footerText: "1시간 전",
+          value: "0%",
+          footerText: "방금 전",
           footerIcon: "ti-timer",
         },
         {
           type: "danger",
           icon: "ti-check",
           title: "일사량",
-          value: "5.3kWh/㎡",
-          footerText: "하루 전",
+          value: "0kWh/㎡",
+          footerText: "방금 전",
           footerIcon: "ti-calendar",
         },
         {
           type: "success",
           icon: "ti-check",
           title: "풍속",
-          value: "0.46m/s",
-          footerText: "3분 전",
+          value: "0.0m/s",
+          footerText: "방금 전",
           footerIcon: "ti-reload",
         },
         {
           type: "success",
           icon: "ti-check",
           title: "풍향",
-          value: "+45°",
-          footerText: "3분 전",
+          value: "+0°",
+          footerText: "방금 전",
           footerIcon: "ti-reload",
         },
         {
@@ -171,7 +175,7 @@ export default {
           icon: "ti-check",
           title: "우적",
           value: "0",
-          footerText: "하루 전",
+          footerText: "오래 전",
           footerIcon: "ti-calendar",
         },
       ],
@@ -189,7 +193,7 @@ export default {
             "4월",
           ],
           series: [
-            [287, 385, 490, 562, 594, 626, 698, 895, 952],
+            [0, 0, 490, 562, 594, 626, 698, 895, 952],
             [67, 152, 193, 240, 387, 435, 535, 642, 744],
             [23, 113, 67, 108, 190, 239, 307, 410, 410],
           ],
@@ -208,45 +212,80 @@ export default {
           showLine: true,
           showPoint: false,
         },
-      },
-      activityChart: {
-        data: {
-          labels: [
-            "Jan",
-            "Feb",
-            "Mar",
-            "Apr",
-            "Mai",
-            "Jun",
-            "Jul",
-            "Aug",
-            "Sep",
-            "Oct",
-            "Nov",
-            "Dec",
-          ],
-          series: [
-            [542, 543, 520, 680, 653, 753, 326, 434, 568, 610, 756, 895],
-            [230, 293, 380, 480, 503, 553, 600, 664, 698, 710, 736, 795],
-          ],
-        },
-        options: {
-          seriesBarDistance: 10,
-          axisX: {
-            showGrid: false,
-          },
-          height: "245px",
-        },
-      },
-      preferencesChart: {
-        data: {
-          labels: ["62%", "32%", "6%"],
-          series: [62, 32, 6],
-        },
-        options: {},
-      },
+      }
     };
   },
+
+  methods: {
+    gettemp: function(error, response, body) {
+      window.console.log("error:", error);
+      window.console.log("response:", response);
+      window.console.log("body:", JSON.parse(body));
+      const data = JSON.parse(body);
+      this.statsCards[0].value = data[0].value + "°C";
+      this.usersChart.data.labels[0] = data[0];
+    },
+    getsolar: function(error, response, body) {
+      window.console.log("error:", error);
+      window.console.log("response:", response);
+      window.console.log("body:", JSON.parse(body));
+      const data = JSON.parse(body);
+      this.statsCards[2].value = data[0].value + "kWh/㎡";
+    },
+    getwindspeed: function(error, response, body) {
+      window.console.log("error:", error);
+      window.console.log("response:", response);
+      window.console.log("body:", JSON.parse(body));
+      const data = JSON.parse(body);
+      this.statsCards[3].value = data[0].value + "m/s";
+    },
+    renderChart: function() {
+      this.usersChart(
+        {
+          data: {
+            labels: [
+              "8월",
+              "9월",
+              "10월",
+              "11월",
+              "2020년 12월",
+              "1월",
+              "2월",
+              "3월",
+              "4월",
+            ],
+            series: [
+              [0, 0, 0, 0, 0, 0, 0, 895, 952],
+              [67, 152, 193, 240, 387, 435, 535, 642, 744],
+              [23, 113, 67, 108, 190, 239, 307, 410, 410],
+            ],
+          },
+          options: {
+            low: 0,
+            high: 1000,
+            showArea: true,
+            height: "245px",
+            axisX: {
+              showGrid: false,
+            },
+            lineSmooth: Chartist.Interpolation.simple({
+              divisor: 3,
+            }),
+            showLine: true,
+            showPoint: false,
+          },
+        }
+      )
+    }
+  },
+  mounted() {
+    this.renderChart();
+  },
+  watch: {
+    data: function() {
+      this.renderChart();
+    }
+  }
 };
 </script>
 <style>
