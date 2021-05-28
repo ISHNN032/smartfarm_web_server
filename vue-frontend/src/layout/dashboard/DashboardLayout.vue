@@ -4,11 +4,11 @@
       <template slot="links">
         <sidebar-link to="/dashboard" name="메인" icon="ti-clipboard" />
         <sidebar-link to="/stats" name="관리인" icon="ti-user" />
-        <sidebar-link to="/stores" name="농장 현황" icon="ti-desktop" />
+        <sidebar-link to="/stores" name="농장 데이터" icon="ti-view-list-alt" />
         <sidebar-link
           to="/typography"
-          name="농장 데이터"
-          icon="ti-view-list-alt"
+          name="농장 현황"
+          icon="ti-desktop"
         />
         <sidebar-link to="/icons" name="제어기" icon="ti-panel" />
         <sidebar-link to="/maps" name="카메라" icon="ti-camera" />

@@ -1,9 +1,37 @@
 <template>
   <div class="row">
     <div class="col-12">
+      <card :title="table0.title" :subTitle="table0.subTitle">
+        <div slot="raw-content" class="table-responsive">
+          <paper-table :data="table0.data" :columns="table0.columns">
+          </paper-table>
+        </div>
+      </card>
+      
       <card :title="table1.title" :subTitle="table1.subTitle">
         <div slot="raw-content" class="table-responsive">
           <paper-table :data="table1.data" :columns="table1.columns">
+          </paper-table>
+        </div>
+      </card>
+
+      <card :title="table2.title" :subTitle="table2.subTitle">
+        <div slot="raw-content" class="table-responsive">
+          <paper-table :data="table2.data" :columns="table2.columns">
+          </paper-table>
+        </div>
+      </card>
+
+      <card :title="table3.title" :subTitle="table3.subTitle">
+        <div slot="raw-content" class="table-responsive">
+          <paper-table :data="table3.data" :columns="table3.columns">
+          </paper-table>
+        </div>
+      </card>
+
+      <card :title="table4.title" :subTitle="table4.subTitle">
+        <div slot="raw-content" class="table-responsive">
+          <paper-table :data="table4.data" :columns="table4.columns">
           </paper-table>
         </div>
       </card>
@@ -26,7 +54,7 @@
 </template>
 <script>
 import { PaperTable } from "@/components";
-import request from "request";
+import axios from 'axios';
 import Button from "../components/Button.vue";
 const tableColumns = ["id", "createTimestamp", "updateTimestamp", "state", "value"];
 const tableData = [];
@@ -37,32 +65,73 @@ export default {
     Button
   },
   data() {
-    request("http://localhost:8080/smartfarm-1.0.0/api/sdatas", this.get);
+    axios.get("http://localhost:8080/smartfarm-1.0.0/api/temp")
+      .then(response => this.patch('temp', response.data))
+      .catch(error => window.console.log(error));
+
+    axios.get("http://localhost:8080/smartfarm-1.0.0/api/humi")
+      .then(response => this.patch('humi', response.data))
+      .catch(error => window.console.log(error));
+
+    axios.get("http://localhost:8080/smartfarm-1.0.0/api/windd")
+      .then(response => this.patch('windd', response.data))
+      .catch(error => window.console.log(error));
+
+    axios.get("http://localhost:8080/smartfarm-1.0.0/api/winds")
+      .then(response => this.patch('winds', response.data))
+      .catch(error => window.console.log(error));
+
+    axios.get("http://localhost:8080/smartfarm-1.0.0/api/solar")
+      .then(response => this.patch('solar', response.data))
+      .catch(error => window.console.log(error));
+
     return {
-      table1: {
-        title: "inji001",
+      table0: {
+        title: "inji000_temp",
         subTitle: "마지막 업데이트: 방금 전",
         columns: [...tableColumns],
         data: [...tableData]
       },
-      // table2: {
-      //   title: "Table on Plain Background",
-      //   subTitle: "Here is a subtitle for this table",
-      //   columns: [...tableColumns],
-      //   data: [...tableData]
-      // }
+      table1: {
+        title: "inji001_humi",
+        subTitle: "마지막 업데이트: 방금 전",
+        columns: [...tableColumns],
+        data: [...tableData]
+      },
+      table2: {
+        title: "inji002_wind_direction",
+        subTitle: "마지막 업데이트: 방금 전",
+        columns: [...tableColumns],
+        data: [...tableData]
+      },
+      table3: {
+        title: "inji003_wind_speed",
+        subTitle: "마지막 업데이트: 방금 전",
+        columns: [...tableColumns],
+        data: [...tableData]
+      },
+      table4: {
+        title: "inji004_solar",
+        subTitle: "마지막 업데이트: 방금 전",
+        columns: [...tableColumns],
+        data: [...tableData]
+      },
     };
   },
   methods: {
-    get: function(error, response, body) {
-      window.console.log("error:", error);
-      window.console.log("response:", response);
-      window.console.log("body:", JSON.parse(body));
-      const data = JSON.parse(body);
-      // window.console.log("time:", data[2].createTimestamp);
-      // data[2].createTimestamp = "wtf";
-      // window.console.log("time:", data[2].createTimestamp);
-      this.table1.data = data;
+    patch: function(table, data){
+      switch (table) {
+        case 'temp':
+          this.table0.data = data; break;
+        case 'humi':
+          this.table1.data = data; break;
+        case 'windd':
+          this.table2.data = data; break;
+        case 'winds':
+          this.table3.data = data; break;
+        case 'solar':
+          this.table4.data = data; break;
+      }
     }
   }
 };
