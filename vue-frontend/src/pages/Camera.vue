@@ -1,63 +1,134 @@
 <template>
   <div class="row">
     <a class="col-md-12">
-      <h1>{{ title }}</h1>
-      <img id="motionjpeg" src="http://192.168.0.63:8080/video"/>
-      <img class="src" id="srcjpg" :src="img_0"
-        @mousedown="changeImageWhen(0, 'down')"
-        @mouseup="changeImageWhen(0, 'up')"/>
-      <img class="src" id="srcjpg" :src="img_1"
-        @mousedown="changeImageWhen(1,'down')"
-        @mouseup="changeImageWhen(1, 'up')"/>
-      <button v-on:click="change"> Change </button>
+      <div class="gallery">
+        <div class="gallery-item">
+          <img class="gallery-image" :src="imagepool[0]" />
+        </div>
 
-      <img src="@/assets/img/1622092934026.jpg"/>
+        <div class="gallery-item">
+          <img class="gallery-image" :src="imagepool[1]" />
+        </div>
+
+        <div class="gallery-item">
+          <img class="gallery-image" :src="imagepool[2]" />
+        </div>
+
+        <div class="gallery-item">
+          <img class="gallery-image" :src="imagepool[3]" />
+        </div>
+
+        <div class="gallery-item">
+          <img class="gallery-image" :src="imagepool[4]" />
+        </div>
+
+        <div class="gallery-item">
+          <img class="gallery-image" :src="imagepool[5]" />
+        </div>
+      </div>
     </a>
   </div>
 </template>
 <script>
-import Button from '../components/Button.vue';
-import AlbumCard from "./Album/AlbumCard.vue";
-import MembersCard from "./UserProfile/MembersCard.vue";
 export default {
   data() {
     return {
-      title: '세다',
-      img_0: 'http://192.168.0.63:8080/shot.jpg',
-      img_1: 'http://192.168.0.63:8080/shot.jpg',
-      images: {
-        up: 'http://192.168.0.63:8080/shot.jpg',
-        down: 'https://via.placeholder.com/300x300/ddd'
-      },
-    }
-  },
-  components: {
-    AlbumCard,
-    MembersCard,
-    Button,
+      imagepool: [],
+      img_0: ""
+    };
   },
   methods: {
-    change: function() {
-      this.title = '세다?'
-    },
-    changeImageWhen: function (num, state) {
-      if(num == 0){
-        this.img_0 = this.images[state];  
-      }else if (num == 1){
-        this.img_1 = this.images[state];
-      } 
-		}
+    importAll(r) {
+      r.keys().forEach(key =>
+        this.imagepool.push(r(key))
+      );
+      window.console.log(this.imagepool);
+      // this.imagepool.forEach(img => {
+      //   this.img_0 = img.pathLong;
+      //   this.$set(this.imagepool, 1, img.pathLong);
+      //   window.console.log("index: " + img.pathLong);
+      // });
+    }
+  },
+  mounted() {
+    this.importAll(require.context("../assets/img/screenshots/", true, /\.jpg$/));
   }
 };
 </script>
 <style>
-  img {
-    width: 100%;
-    object-fit: cover;
+:root {
+  font-size: 10px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  min-height: 100vh;
+  background-color: #fafafa;
+}
+
+.container {
+  max-width: 100rem;
+  margin: 0 auto;
+  padding: 0 2rem 2rem;
+}
+
+.heading {
+  font-family: "Montserrat", Arial, sans-serif;
+  font-size: 4rem;
+  font-weight: 500;
+  line-height: 1.5;
+  text-align: center;
+  padding: 3.5rem 0;
+  color: #1a1a1a;
+}
+
+.heading span {
+  display: block;
+}
+
+.gallery {
+  display: flex;
+  flex-wrap: wrap;
+  /* Compensate for excess margin on outer gallery flex items */
+  margin: -1rem -1rem;
+}
+
+.gallery-item {
+  /* Minimum width of 24rem and grow to fit available space */
+  flex: 1 0 24rem;
+  /* Margin value should be half of grid-gap value as margins on flex items don't collapse */
+  margin: 1rem;
+  box-shadow: 0.3rem 0.4rem 0.4rem rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.gallery-image {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 400ms ease-out;
+}
+
+.gallery-image:hover {
+  transform: scale(1.15);
+}
+
+@supports (display: grid) {
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(24rem, 1fr));
+    grid-gap: 2rem;
   }
-  .src {
-    width: 50%;
-    height: 200px;
-    object-fit: cover;
+
+  .gallery,
+  .gallery-item {
+    margin: 0;
   }
+}
 </style>

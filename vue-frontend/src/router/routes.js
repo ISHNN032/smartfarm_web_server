@@ -38,7 +38,7 @@ const routes = [
         component: Typography
       },
       {
-        path: "login",
+        path: "icons",
         name: "controller",
         component: Icons
       },
