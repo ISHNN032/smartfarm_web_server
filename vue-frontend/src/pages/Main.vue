@@ -113,7 +113,7 @@
 <script>
 import { StatsCard, ChartCard } from "@/components/index";
 import Chartist from "chartist";
-import request from "request";
+import axios from 'axios';
 import SensorTable from "../components/SensorTable.vue";
 export default {
   components: {
@@ -125,9 +125,6 @@ export default {
    * Chart data used to render stats, charts. Should be replaced with server data
    */
   data() {
-    request("http://localhost:8080/smartfarm-1.0.0/api/temp", this.gettemp);
-    request("http://localhost:8080/smartfarm-1.0.0/api/solar", this.getsolar);
-        request("http://localhost:8080/smartfarm-1.0.0/api/winds", this.getwindspeed);
     return {
       statsCards: [
         {
@@ -139,20 +136,12 @@ export default {
           footerIcon: "ti-reload",
         },
         {
-          type: "success",
+          type: "info",
           icon: "ti-check",
           title: "외부습도",
           value: "0%",
           footerText: "방금 전",
           footerIcon: "ti-timer",
-        },
-        {
-          type: "danger",
-          icon: "ti-check",
-          title: "일사량",
-          value: "0kWh/㎡",
-          footerText: "방금 전",
-          footerIcon: "ti-calendar",
         },
         {
           type: "success",
@@ -171,11 +160,19 @@ export default {
           footerIcon: "ti-reload",
         },
         {
+          type: "danger",
+          icon: "ti-check",
+          title: "지온",
+          value: "0°C",
+          footerText: "방금 전",
+          footerIcon: "ti-calendar",
+        },
+        {
           type: "info",
           icon: "ti-check",
-          title: "우적",
-          value: "0",
-          footerText: "오래 전",
+          title: "지습",
+          value: "0%",
+          footerText: "방금 전",
           footerIcon: "ti-calendar",
         },
       ],
@@ -217,74 +214,52 @@ export default {
   },
 
   methods: {
-    gettemp: function(error, response, body) {
-      window.console.log("error:", error);
-      window.console.log("response:", response);
-      window.console.log("body:", JSON.parse(body));
-      const data = JSON.parse(body);
-      this.statsCards[0].value = data[0].value + "°C";
-      this.usersChart.data.labels[0] = data[0];
+    getDatas: function(){
+      axios.get("http://localhost:8080/smartfarm-1.0.0/api/temp")
+        .then(response => {this.patch('temp', response.data)})
+        .catch(error => window.console.log(error));
+      axios.get("http://localhost:8080/smartfarm-1.0.0/api/humi")
+        .then(response => this.patch('humi', response.data))
+        .catch(error => window.console.log(error));
+      axios.get("http://localhost:8080/smartfarm-1.0.0/api/winds")
+        .then(response => this.patch('winds', response.data))
+        .catch(error => window.console.log(error));
+      axios.get("http://localhost:8080/smartfarm-1.0.0/api/windd")
+        .then(response => this.patch('windd', response.data))
+        .catch(error => window.console.log(error));
+      axios.get("http://localhost:8080/smartfarm-1.0.0/api/soilt")
+        .then(response => this.patch('soilt', response.data))
+        .catch(error => window.console.log(error));
+      axios.get("http://localhost:8080/smartfarm-1.0.0/api/soilh")
+        .then(response => this.patch('soilh', response.data))
+        .catch(error => window.console.log(error));
     },
-    getsolar: function(error, response, body) {
-      window.console.log("error:", error);
-      window.console.log("response:", response);
-      window.console.log("body:", JSON.parse(body));
-      const data = JSON.parse(body);
-      this.statsCards[2].value = data[0].value + "kWh/㎡";
-    },
-    getwindspeed: function(error, response, body) {
-      window.console.log("error:", error);
-      window.console.log("response:", response);
-      window.console.log("body:", JSON.parse(body));
-      const data = JSON.parse(body);
-      this.statsCards[3].value = data[0].value + "m/s";
-    },
-    renderChart: function() {
-      this.usersChart(
-        {
-          data: {
-            labels: [
-              "8월",
-              "9월",
-              "10월",
-              "11월",
-              "2020년 12월",
-              "1월",
-              "2월",
-              "3월",
-              "4월",
-            ],
-            series: [
-              [0, 0, 0, 0, 0, 0, 0, 895, 952],
-              [67, 152, 193, 240, 387, 435, 535, 642, 744],
-              [23, 113, 67, 108, 190, 239, 307, 410, 410],
-            ],
-          },
-          options: {
-            low: 0,
-            high: 1000,
-            showArea: true,
-            height: "245px",
-            axisX: {
-              showGrid: false,
-            },
-            lineSmooth: Chartist.Interpolation.simple({
-              divisor: 3,
-            }),
-            showLine: true,
-            showPoint: false,
-          },
-        }
-      )
+    patch: function(table, data){
+      switch (table) {
+        case 'temp':
+          this.statsCards[0].value = data[0].value + "°C"; break;
+        case 'humi':
+          this.statsCards[1].value = data[0].value + "%"; break;
+        case 'winds':
+          this.statsCards[2].value = data[0].value + "m/s"; break;
+        case 'windd':
+          this.statsCards[3].value = data[0].value + "°"; break;
+        case 'soilt':
+          this.statsCards[4].value = data[0].value + "°C"; break;
+        case 'soilh':
+          this.statsCards[5].value = data[0].value + "%"; break;
+      }
     }
   },
-  mounted() {
-    this.renderChart();
+  mounted: function () {
+    this.getDatas();
+    this.pollInterval = setInterval(function () {
+      this.getDatas();
+    }.bind(this), 5000)
   },
-  watch: {
-    data: function() {
-      this.renderChart();
-    }
+
+  beforeDestroy: function () {
+    clearInterval(this.pollInterval);
   }
 };
 </script>

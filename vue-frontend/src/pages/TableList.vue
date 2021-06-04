@@ -35,6 +35,13 @@
           </paper-table>
         </div>
       </card>
+
+      <card :title="table5.title" :subTitle="table5.subTitle">
+        <div slot="raw-content" class="table-responsive">
+          <paper-table :data="table5.data" :columns="table5.columns">
+          </paper-table>
+        </div>
+      </card>
     </div>
     <!-- <div class="col-12">
       <card class="card-plain">
@@ -65,27 +72,8 @@ export default {
     Button
   },
   data() {
-    axios.get("http://localhost:8080/smartfarm-1.0.0/api/temp")
-      .then(response => this.patch('temp', response.data))
-      .catch(error => window.console.log(error));
-
-    axios.get("http://localhost:8080/smartfarm-1.0.0/api/humi")
-      .then(response => this.patch('humi', response.data))
-      .catch(error => window.console.log(error));
-
-    axios.get("http://localhost:8080/smartfarm-1.0.0/api/windd")
-      .then(response => this.patch('windd', response.data))
-      .catch(error => window.console.log(error));
-
-    axios.get("http://localhost:8080/smartfarm-1.0.0/api/winds")
-      .then(response => this.patch('winds', response.data))
-      .catch(error => window.console.log(error));
-
-    axios.get("http://localhost:8080/smartfarm-1.0.0/api/solar")
-      .then(response => this.patch('solar', response.data))
-      .catch(error => window.console.log(error));
-
     return {
+      pollInterval: null,
       table0: {
         title: "inji000_temp",
         subTitle: "마지막 업데이트: 방금 전",
@@ -111,14 +99,48 @@ export default {
         data: [...tableData]
       },
       table4: {
-        title: "inji004_solar",
+        title: "inji004_soilt",
         subTitle: "마지막 업데이트: 방금 전",
         columns: [...tableColumns],
         data: [...tableData]
       },
+      table5: {
+        title: "inji005_soilh",
+        subTitle: "마지막 업데이트: 방금 전",
+        columns: [...tableColumns],
+        data: [...tableData]
+      }
     };
   },
   methods: {
+    getDatas: function(){
+      axios.get("http://localhost:8080/smartfarm-1.0.0/api/temp")
+        .then(response => {
+            this.patch('temp', response.data)
+            window.console.log("getDatas:");
+          })
+        .catch(error => window.console.log(error));
+
+      axios.get("http://localhost:8080/smartfarm-1.0.0/api/humi")
+        .then(response => this.patch('humi', response.data))
+        .catch(error => window.console.log(error));
+
+      axios.get("http://localhost:8080/smartfarm-1.0.0/api/windd")
+        .then(response => this.patch('windd', response.data))
+        .catch(error => window.console.log(error));
+
+      axios.get("http://localhost:8080/smartfarm-1.0.0/api/winds")
+        .then(response => this.patch('winds', response.data))
+        .catch(error => window.console.log(error));
+
+      axios.get("http://localhost:8080/smartfarm-1.0.0/api/soilt")
+        .then(response => this.patch('soilt', response.data))
+        .catch(error => window.console.log(error));
+
+      axios.get("http://localhost:8080/smartfarm-1.0.0/api/soilh")
+        .then(response => this.patch('soilh', response.data))
+        .catch(error => window.console.log(error));
+    },
     patch: function(table, data){
       switch (table) {
         case 'temp':
@@ -129,10 +151,29 @@ export default {
           this.table2.data = data; break;
         case 'winds':
           this.table3.data = data; break;
-        case 'solar':
+        case 'soilt':
           this.table4.data = data; break;
+        case 'soilh':
+          this.table5.data = data; break;
       }
     }
+  },
+  // mounted() {
+  //   this.getDatas()
+  //   //check if the status is completed, if not fetch data every 10minutes
+  //   this.pollInterval = setInterval(this.getDatas(), 1000) //save reference to the interval
+  //   setTimeout(() => {clearInterval(this.pollInterval)}, 36000000) //stop polling after an hour
+  // }
+  mounted: function () {
+    this.getDatas();
+
+    this.pollInterval = setInterval(function () {
+      this.getDatas();
+    }.bind(this), 5000)
+  },
+
+  beforeDestroy: function () {
+    clearInterval(this.pollInterval);
   }
 };
 </script>
