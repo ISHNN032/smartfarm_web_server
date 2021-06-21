@@ -6,7 +6,7 @@ spring:
   datasource:
     hikari:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: 'jdbc:mysql://localhost:3306/smartfarm?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=UTC&tinyInt1isBit=false'
+      jdbc-url: 'jdbc:mysql://localhost:3306/smartfarm?autoReconnect=true&useUnicode=true&characterEncoding=UTF-8&useSSL=true&serverTimezone=Asia/Seoul &tinyInt1isBit=false'
       username: root
       password: 1234
       auto-commit: false
