@@ -1,6 +1,6 @@
 <template>
   <div>
-    <img id="motionjpeg" src="http://192.168.0.63:8080/video" />
+    <img id="motionjpeg" src="http://192.168.0.51:8080/video" />
     <img
       class="src"
       id="srcjpg"
@@ -21,10 +21,10 @@
 export default {
   data() {
     return {
-      img_0: "http://192.168.0.63:8080/shot.jpg",
-      img_1: "http://192.168.0.63:8080/shot.jpg",
+      img_0: "http://192.168.0.51:8080/shot.jpg",
+      img_1: "http://192.168.0.51:8080/shot.jpg",
       images: {
-        up: "http://192.168.0.63:8080/shot.jpg",
+        up: "http://192.168.0.51:8080/shot.jpg",
         down: "https://via.placeholder.com/300x300/ddd"
       }
     };
