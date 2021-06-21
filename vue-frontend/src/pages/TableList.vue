@@ -2,12 +2,12 @@
   <div class="row">
     <div class="col-12">
       <card :title="table0.title" :subTitle="table0.subTitle">
-        <div slot="raw-content" class="table-responsive">
+        <div class="table-responsive">
           <paper-table :data="table0.data" :columns="table0.columns">
           </paper-table>
         </div>
       </card>
-      
+
       <card :title="table1.title" :subTitle="table1.subTitle">
         <div slot="raw-content" class="table-responsive">
           <paper-table :data="table1.data" :columns="table1.columns">
@@ -61,9 +61,14 @@
 </template>
 <script>
 import { PaperTable } from "@/components";
-import axios from 'axios';
+import axios from "axios";
 import Button from "../components/Button.vue";
-const tableColumns = ["id", "createTimestamp", "updateTimestamp", "state", "value"];
+const tableColumns = [
+  "id",
+  "createtimestamp",
+  "state",
+  "value"
+];
 const tableData = [];
 
 export default {
@@ -113,48 +118,75 @@ export default {
     };
   },
   methods: {
-    getDatas: function(){
-      axios.get("http://localhost:8080/smartfarm-1.0.0/api/temp")
+    getDatas: function() {
+      axios
+        .get("http://localhost:8080/smartfarm-1.0.0/api/temp")
+        .then(response =>{
+          var vv = JSON.stringify(response.data).replace(/"([^"]+)":/g,function($0,$1){return ('"'+$1.toLowerCase()+'":');});
+          this.patch("temp", JSON.parse(vv));
+        })
+        .catch(error => window.console.log(error));
+
+      axios
+        .get("http://localhost:8080/smartfarm-1.0.0/api/humi")
         .then(response => {
-            this.patch('temp', response.data)
-            window.console.log("getDatas:");
-          })
+          var vv = JSON.stringify(response.data).replace(/"([^"]+)":/g,function($0,$1){return ('"'+$1.toLowerCase()+'":');});
+          this.patch("humi", JSON.parse(vv));
+        })
         .catch(error => window.console.log(error));
 
-      axios.get("http://localhost:8080/smartfarm-1.0.0/api/humi")
-        .then(response => this.patch('humi', response.data))
+      axios
+        .get("http://localhost:8080/smartfarm-1.0.0/api/windd")
+        .then(response => {
+          var vv = JSON.stringify(response.data).replace(/"([^"]+)":/g,function($0,$1){return ('"'+$1.toLowerCase()+'":');});
+          this.patch("windd", JSON.parse(vv));
+        })
         .catch(error => window.console.log(error));
 
-      axios.get("http://localhost:8080/smartfarm-1.0.0/api/windd")
-        .then(response => this.patch('windd', response.data))
+      axios
+        .get("http://localhost:8080/smartfarm-1.0.0/api/winds")
+        .then(response => {
+          var vv = JSON.stringify(response.data).replace(/"([^"]+)":/g,function($0,$1){return ('"'+$1.toLowerCase()+'":');});
+          this.patch("winds", JSON.parse(vv));
+        })
         .catch(error => window.console.log(error));
 
-      axios.get("http://localhost:8080/smartfarm-1.0.0/api/winds")
-        .then(response => this.patch('winds', response.data))
+      axios
+        .get("http://localhost:8080/smartfarm-1.0.0/api/soilt")
+        .then(response => {
+          var vv = JSON.stringify(response.data).replace(/"([^"]+)":/g,function($0,$1){return ('"'+$1.toLowerCase()+'":');});
+          this.patch("soilt", JSON.parse(vv));
+        })
         .catch(error => window.console.log(error));
 
-      axios.get("http://localhost:8080/smartfarm-1.0.0/api/soilt")
-        .then(response => this.patch('soilt', response.data))
-        .catch(error => window.console.log(error));
-
-      axios.get("http://localhost:8080/smartfarm-1.0.0/api/soilh")
-        .then(response => this.patch('soilh', response.data))
+      axios
+        .get("http://localhost:8080/smartfarm-1.0.0/api/soilh")
+        .then(response => {
+          var vv = JSON.stringify(response.data).replace(/"([^"]+)":/g,function($0,$1){return ('"'+$1.toLowerCase()+'":');});
+          this.patch("soilh", JSON.parse(vv));
+        })
         .catch(error => window.console.log(error));
     },
-    patch: function(table, data){
+    patch: function(table, data) {
       switch (table) {
-        case 'temp':
-          this.table0.data = data; break;
-        case 'humi':
-          this.table1.data = data; break;
-        case 'windd':
-          this.table2.data = data; break;
-        case 'winds':
-          this.table3.data = data; break;
-        case 'soilt':
-          this.table4.data = data; break;
-        case 'soilh':
-          this.table5.data = data; break;
+        case "temp":
+          this.table0.data = data;
+          break;
+        case "humi":
+          this.table1.data = data;
+          break;
+        case "windd":
+          this.table2.data = data;
+          break;
+        case "winds":
+          this.table3.data = data;
+          break;
+        case "soilt":
+          this.table4.data = data;
+          break;
+        case "soilh":
+          this.table5.data = data;
+          break;
       }
     }
   },
@@ -164,15 +196,18 @@ export default {
   //   this.pollInterval = setInterval(this.getDatas(), 1000) //save reference to the interval
   //   setTimeout(() => {clearInterval(this.pollInterval)}, 36000000) //stop polling after an hour
   // }
-  mounted: function () {
+  mounted: function() {
     this.getDatas();
 
-    this.pollInterval = setInterval(function () {
-      this.getDatas();
-    }.bind(this), 5000)
+    this.pollInterval = setInterval(
+      function() {
+        this.getDatas();
+      }.bind(this),
+      5000
+    );
   },
 
-  beforeDestroy: function () {
+  beforeDestroy: function() {
     clearInterval(this.pollInterval);
   }
 };
