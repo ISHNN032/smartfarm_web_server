@@ -39,6 +39,9 @@ public class LoginController {
 		if (securityUser != null && securityUser.getRoleTypes().contains(RoleType.ROLE_VIEW)) {
 			return "redirect:/v";
 		}
+		if (securityUser != null && securityUser.getRoleTypes().contains(RoleType.ROLE_ADMIN)) {
+			return "redirect:/v";
+		}
 		return "login/login";
 	}
 

@@ -14,6 +14,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.livesoft.smartfarm.models.simples.UserSimple;
 
 import lombok.AccessLevel;
@@ -57,6 +58,7 @@ public class User extends BaseEntity implements Serializable {
 	private String password;
 	
 	@Singular("userRoles")
+	@JsonManagedReference
 	@OneToMany(mappedBy="user")
 	@Where(clause = "del = false")
 	private Set<UserRole> userRoles;

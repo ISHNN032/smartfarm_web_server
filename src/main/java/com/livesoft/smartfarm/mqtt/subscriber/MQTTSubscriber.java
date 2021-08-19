@@ -54,8 +54,8 @@ public class MQTTSubscriber extends MQTTConfig implements MqttCallback, MQTTSubs
 	 */
 	@Override
 	public void messageArrived(String topic, MqttMessage message) throws Exception {
-		// Called when a message arrives from the server that matches any
-		// subscription made by the client
+		//topic 메시지 파싱해서 DB에 저장...
+		
 		String time = new Timestamp(System.currentTimeMillis()).toString();
 		System.out.println();
 		System.out.println("***********************************************************************");
