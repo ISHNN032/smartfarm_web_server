@@ -37,16 +37,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers("/", "/login", "/join", "/api/v1/**", "/test/**","/mqtt/message").permitAll()
-				.antMatchers("/v/users").hasRole("ADMIN").antMatchers("/v", "/v/**").hasRole("VIEW")
-				.antMatchers("/v", "/v/**").hasRole("ADMIN")
+				.antMatchers("/v/users").hasRole("ADMIN").antMatchers("/v", "/v/**").hasAnyRole("VIEW", "ADMIN")
 				.antMatchers("/swagger-ui.html", "/swagger-ui/**").hasRole("VIEW").anyRequest().authenticated().and()
 				.formLogin().loginPage("/login").defaultSuccessUrl("/v", true).usernameParameter("email")
 				.passwordParameter("password").and().logout().invalidateHttpSession(true).deleteCookies("JSESSIONID")
 				.and().exceptionHandling().accessDeniedHandler(webAccessDeniedHandler).and()
 				.authenticationProvider(authenticationProvider()).csrf()
 				.requireCsrfProtectionMatcher(new CsrfRequireMatcher())
-				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-				.and().csrf().disable();
+				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
 	}
 	
 	@Bean
@@ -63,7 +61,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	static class CsrfRequireMatcher implements RequestMatcher {
-	    private static final Pattern ALLOWED_METHODS = Pattern.compile("^(GET|HEAD|TRACE|OPTIONS)$");
+	    private static final Pattern ALLOWED_METHODS = Pattern.compile("^(GET|POST|HEAD|TRACE|OPTIONS)$");
 	    
 	    @Override
 	    public boolean matches(HttpServletRequest request) {
