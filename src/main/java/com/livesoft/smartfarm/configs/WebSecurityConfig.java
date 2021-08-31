@@ -13,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 
@@ -40,8 +42,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers("/v/users").hasRole("ADMIN").antMatchers("/v", "/v/**").hasAnyRole("VIEW", "ADMIN")
 				.antMatchers("/swagger-ui.html", "/swagger-ui/**").hasRole("VIEW").anyRequest().authenticated().and()
 				.formLogin().loginPage("/login").defaultSuccessUrl("/v", true).usernameParameter("email")
-				.passwordParameter("password").and().logout().invalidateHttpSession(true).deleteCookies("JSESSIONID")
-				.and().exceptionHandling().accessDeniedHandler(webAccessDeniedHandler).and()
+				.passwordParameter("password").and().logout().invalidateHttpSession(true).deleteCookies("JSESSIONID").and()
+				.addFilterAfter(new HttpsFilter(), WebAsyncManagerIntegrationFilter.class)
+				.exceptionHandling().accessDeniedHandler(webAccessDeniedHandler).and()
 				.authenticationProvider(authenticationProvider()).csrf()
 				.requireCsrfProtectionMatcher(new CsrfRequireMatcher())
 				.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse());
