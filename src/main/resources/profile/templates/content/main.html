@@ -1,54 +1,88 @@
 <!DOCTYPE html>
-<html lang="ko" 
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="cmm/layout">
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="cmm/layout"
+>
+  <th:block layout:fragment="f-title">main</th:block>
 
-<th:block layout:fragment="f-title">main</th:block>
+  <section layout:fragment="f-content">
+    <div class="container">
+      <div class="packages-overview">
+        <dl class="pricing pricing--personal">
+          <dt class="pricing__title">Package Type</dt>
+          <dd class="pricing__data pricing__data--package">Personal</dd>
+          <dt class="pricing__title">Price per month</dt>
+          <dd class="pricing__data pricing__data--price">
+            <span class="currency currency--dollar">7</span>
+            <span class="hidden-but-relevant">dollars</span>
+          </dd>
+          <dt class="pricing__title">Package Overview</dt>
+          <dd class="pricing__data pricing__data--overview">
+            Build your own projects on GitHub.com and invite collaborators to
+            join you in unlimited private repositories.
+          </dd>
+          <dt class="pricing__title">Package Offers</dt>
+          <dd class="pricing__data pricing__data--offer">
+            Free for students as part of the
+            <a href="#">Student Developer Pack</a>
+          </dd>
+          <dt class="pricing__title">Package Action</dt>
+          <dd class="pricing__data pricing__data--action">
+            <a href="#" class="button">Upgrade your account</a>
+          </dd>
+        </dl>
 
-<section layout:fragment="f-content">
-	<div class="container">
-		<div class="packages-overview">
-			<dl class="pricing pricing--personal">
-				<dt class="pricing__title">Package Type</dt>
-				<dd class="pricing__data pricing__data--package">Personal</dd>
-				<dt class="pricing__title">Price per month</dt>
-				<dd class="pricing__data pricing__data--price"><span class="currency currency--dollar">7</span> <span class="hidden-but-relevant">dollars</span></dd>
-				<dt class="pricing__title">Package Overview</dt>
-				<dd class="pricing__data pricing__data--overview">Build your own projects on GitHub.com and invite collaborators to join you in unlimited private repositories.</dd>
-				<dt class="pricing__title">Package Offers</dt>
-				<dd class="pricing__data pricing__data--offer">Free for students as part of the <a href="#">Student Developer Pack</a></dd>
-				<dt class="pricing__title">Package Action</dt>
-				<dd class="pricing__data pricing__data--action"><a href="#" class="button">Upgrade your account</a></dd>
-			</dl>
-			
-			<dl class="pricing pricing--organization">
-				<dt class="pricing__title">Package Type.</dt>
-				<dd class="pricing__data pricing__data--package">Organization</dd>
-				<dt class="pricing__title">Price per user per month.</dt>
-				<dd class="pricing__data pricing__data--price"><span class="currency currency--dollar">9</span> <span class="hidden-but-relevant">dollars</span></dd>
-				<dt class="pricing__title">Package Overview.</dt>
-				<dd class="pricing__data pricing__data--overview">Work with your team on GitHub.com in unlimited private repositories. Manage team and user level permissions.</dd>
-				<dt class="pricing__title">Package Offers.</dt>
-				<dd class="pricing__data pricing__data--offer">Starting at <span class="currency currency--dollar">25</span> <span class="hidden-but-relevant">dollars</span> per month for your first 5 users.</dd>
-				<dt class="pricing__title">Package Action.</dt>
-				<dd class="pricing__data pricing__data--action"><a href="#" class="button">Create an organization</a></dd>
-			</dl>
-			
-			<dl class="pricing pricing--enterprise">
-				<dt class="pricing__title">Package Type</dt>
-				<dd class="pricing__data pricing__data--package">Enterprise</dd>
-				<dt class="pricing__title">Price per user per month</dt>
-				<dd class="pricing__data pricing__data--price"><span class="currency currency--dollar">21</span> <span class="hidden-but-relevant">dollars</span></dd>
-				<dt class="pricing__title">Package Overview</dt>
-				<dd class="pricing__data pricing__data--overview">Host your team’s code on your own servers or in a private cloud with your existing security controls.</dd>
-				<dt class="pricing__title">Package Offers</dt>
-				<dd class="pricing__data pricing__data--offer">Sold in packs of 10 users and billed annually.</dd>
-				<dt class="pricing__title">Package Action</dt>
-				<dd class="pricing__data pricing__data--action"><a href="#" class="button">Start a free Enterprise trial</a></dd>
-			</dl>   
-		</div>	
-	</div>
-</section>
- 
+        <dl class="pricing pricing--organization">
+          <dt class="pricing__title">Package Type.</dt>
+          <dd class="pricing__data pricing__data--package">Organization</dd>
+          <dt class="pricing__title">Price per user per month.</dt>
+          <dd class="pricing__data pricing__data--price">
+            <span class="currency currency--dollar">9</span>
+            <span class="hidden-but-relevant">dollars</span>
+          </dd>
+          <dt class="pricing__title">Package Overview.</dt>
+          <dd class="pricing__data pricing__data--overview">
+            Work with your team on GitHub.com in unlimited private repositories.
+            Manage team and user level permissions.
+          </dd>
+          <dt class="pricing__title">Package Offers.</dt>
+          <dd class="pricing__data pricing__data--offer">
+            Starting at <span class="currency currency--dollar">25</span>
+            <span class="hidden-but-relevant">dollars</span> per month for your
+            first 5 users.
+          </dd>
+          <dt class="pricing__title">Package Action.</dt>
+          <dd class="pricing__data pricing__data--action">
+            <a href="#" class="button">Create an organization</a>
+          </dd>
+        </dl>
+
+        <dl class="pricing pricing--enterprise">
+          <dt class="pricing__title">Package Type</dt>
+          <dd class="pricing__data pricing__data--package">Enterprise</dd>
+          <dt class="pricing__title">Price per user per month</dt>
+          <dd class="pricing__data pricing__data--price">
+            <span class="currency currency--dollar">21</span>
+            <span class="hidden-but-relevant">dollars</span>
+          </dd>
+          <dt class="pricing__title">Package Overview</dt>
+          <dd class="pricing__data pricing__data--overview">
+            Host your team’s code on your own servers or in a private cloud with
+            your existing security controls.
+          </dd>
+          <dt class="pricing__title">Package Offers</dt>
+          <dd class="pricing__data pricing__data--offer">
+            Sold in packs of 10 users and billed annually.
+          </dd>
+          <dt class="pricing__title">Package Action</dt>
+          <dd class="pricing__data pricing__data--action">
+            <a href="#" class="button">Start a free Enterprise trial</a>
+          </dd>
+        </dl>
+      </div>
+    </div>
+  </section>
+</html>

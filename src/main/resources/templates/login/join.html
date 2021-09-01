@@ -1,99 +1,159 @@
 <!DOCTYPE html>
-<html lang="ko" 
-	xmlns:th="http://www.thymeleaf.org"
-	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-	layout:decorator="cmm/layout_login">
+<html
+  lang="ko"
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+  layout:decorator="cmm/layout_login"
+>
+  <th:block layout:fragment="f-title">SmartFarm 회원가입</th:block>
 
-<th:block layout:fragment="f-title">SmartFarm 회원가입</th:block>
+  <section layout:fragment="f-content">
+    <div class="login_wrapper" style="margin: calc(50vh - 320px) auto 0px">
+      <h1>SmartFarm</h1>
+      <form method="post" th:action="@{/join}">
+        <div>
+          <input
+            type="text"
+            name="email"
+            class="form-control"
+            placeholder="이메일"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="password"
+            name="password"
+            class="form-control"
+            placeholder="비밀번호"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div>
+          <input
+            type="text"
+            name="name"
+            class="form-control"
+            placeholder="이름"
+            autocomplete="off"
+            required
+          />
+        </div>
+        <div style="margin: 0">
+          <div class="custom-control custom-radio custom-control-inline">
+            <input
+              type="radio"
+              class="custom-control-input"
+              id="sex-1"
+              name="sex"
+              value="1"
+              checked
+            />
+            <label class="custom-control-label" for="sex-1">남</label>
+          </div>
+          <div class="custom-control custom-radio custom-control-inline">
+            <input
+              type="radio"
+              class="custom-control-input"
+              id="sex-2"
+              name="sex"
+              value="2"
+            />
+            <label class="custom-control-label" for="sex-2">여</label>
+          </div>
+        </div>
+        <div>
+          <input
+            type="text"
+            name="birthDate"
+            class="form-control"
+            placeholder="생년월일(yyMMdd)"
+            autocomplete="off"
+          />
+        </div>
+        <div style="margin-bottom: 50px">
+          <input
+            type="text"
+            name="phoneNumber"
+            class="form-control"
+            placeholder="전화번호(-생략)"
+            autocomplete="off"
+          />
+        </div>
+        <div>
+          <button type="submit" class="btn btn-dark btn-large form-control">
+            Join
+          </button>
+        </div>
+        <div>
+          <button
+            type="button"
+            class="btn btn-secondary btn-large form-control"
+            id="btn_loginForm"
+          >
+            Back
+          </button>
+        </div>
+      </form>
+      <hr class="separator" />
+      <div>
+        <h1>SmartFarm</h1>
+        <p>©2021 All Rights Reserved.</p>
+      </div>
+    </div>
+  </section>
 
-<section layout:fragment="f-content">
-	<div class="login_wrapper" style="margin: calc(50vh - 320px) auto 0px;">
-		<h1>SmartFarm</h1>
-		<form method="post" th:action="@{/join}">
-			<div>
-				<input type="text" name="email" class="form-control" placeholder="이메일" autocomplete="off" required/>
-			</div>
-			<div>
-				<input type="password" name="password" class="form-control" placeholder="비밀번호" autocomplete="off" required/>
-			</div>
-			<div>
-				<input type="text" name="name" class="form-control" placeholder="이름" autocomplete="off" required/>
-			</div>
-			<div style="margin: 0;">
-				<div class="custom-control custom-radio custom-control-inline">
-			    <input type="radio" class="custom-control-input" id="sex-1" name="sex" value="1" checked>
-			    <label class="custom-control-label" for="sex-1">남</label>
-			  </div>
-			  <div class="custom-control custom-radio custom-control-inline">
-			    <input type="radio" class="custom-control-input" id="sex-2" name="sex" value="2">
-			    <label class="custom-control-label" for="sex-2">여</label>
-			  </div>
-			</div>
-			<div>
-				<input type="text" name="birthDate" class="form-control" placeholder="생년월일(yyMMdd)" autocomplete="off"/>
-			</div>
-			<div style="margin-bottom: 50px;">
-				<input type="text" name="phoneNumber" class="form-control" placeholder="전화번호(-생략)" autocomplete="off"/>
-			</div>
-			<div>
-				<button type="submit" class="btn btn-dark btn-large form-control">Join</button>
-			</div>
-			<div>
-				<button type="button" class="btn btn-secondary btn-large form-control" id="btn_loginForm">Back</button>
-			</div>
-		</form>
-		<hr class="separator"/>
-		<div>
-			<h1>SmartFarm</h1>
-			<p>©2021 All Rights Reserved.</p>
-		</div>
-	</div>
-</section>
+  <th:block layout:fragment="f-script">
+    <script>
+      $(function () {
+        $('form').on('submit', function (e) {
+          e.preventDefault();
+          var $form = $(this).closest('form');
+          var formData = $form.serializeObject();
 
-<th:block layout:fragment="f-script">
-<script>
-$(function() {
-		
-	$("form").on("submit", function(e) {
-		e.preventDefault();
-		var $form = $(this).closest("form");
-		var formData = $form.serializeObject();
-		
-		$("section div:eq(0)").append('<div id="d-spin" class="spinner-border">');
-		$.ajax({
-			type : $form.attr("method"),
-			dataType : 'json',
-			contentType : "application/json",
-			data : JSON.stringify(formData),
-			url : $form.attr("action"),
-			beforeSend : function(xhr){
-				xhr.setRequestHeader($("meta[name='_csrf_header']").attr("content"), $("meta[name='_csrf']").attr("content"));
-			},
-			success : function(res) {
-				$("#d-spin").remove();
-				if (res.duplicate) {
-					$.notify("중복된 이메일 입니다.");
-					$("input[name='email']").val("");
-					$("input[name='email']").focus();
-				} else if (res.success) {
-					$.notify("회원 가입 완료되었습니다.");
-					setTimeout(function() {window.location = document.referrer}, 800);						
-				} else {
-					$("#d-spin").hide();
-					$.notify("crud fail");
-				}
-			},
-			error : function(error) {
-				alert(error.errorMsg);
-			}
-		});
-		
-	});	
-	
-	$("#btn_loginForm").on("click", function() {
-		location.href = document.referrer;
-	});
-	
-});
-</script>
-</th:block>
+          $('section div:eq(0)').append(
+            '<div id="d-spin" class="spinner-border">'
+          );
+          $.ajax({
+            type: $form.attr('method'),
+            dataType: 'json',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            url: $form.attr('action'),
+            beforeSend: function (xhr) {
+              xhr.setRequestHeader(
+                $("meta[name='_csrf_header']").attr('content'),
+                $("meta[name='_csrf']").attr('content')
+              );
+            },
+            success: function (res) {
+              $('#d-spin').remove();
+              if (res.duplicate) {
+                $.notify('중복된 이메일 입니다.');
+                $("input[name='email']").val('');
+                $("input[name='email']").focus();
+              } else if (res.success) {
+                $.notify('회원 가입 완료되었습니다.');
+                setTimeout(function () {
+                  window.location = document.referrer;
+                }, 800);
+              } else {
+                $('#d-spin').hide();
+                $.notify('crud fail');
+              }
+            },
+            error: function (error) {
+              alert(error.errorMsg);
+            },
+          });
+        });
+
+        $('#btn_loginForm').on('click', function () {
+          location.href = document.referrer;
+        });
+      });
+    </script>
+  </th:block>
+</html>
