@@ -4,11 +4,14 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
-@Schema(description = "지습센서데이터")
+@Schema(description = "센서데이터")
 @Getter
 @Setter
-public class DataSoilHumiValue {
-	@Schema(description = "상태")
+public class SensorDataValue {
+	@Schema(description = "센서아이디")
+    private Long sensorId;
+    
+    @Schema(description = "상태")
 	private int state;
 
 	@Schema(description = "값")

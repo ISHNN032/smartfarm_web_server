@@ -26,21 +26,16 @@ public class SensorService {
 
 	@Transactional
 	public void save(SensorValue value) {
-		Sensor sensor = Sensor.builder()._id(value.get_id()).name(value.getName()).tableName(value.getTableName())
-				.dataType(value.getDataType()).build(); // ->
+		Sensor sensor = Sensor.builder().contId(value.getContId()).name(value.getName()).build(); // ->
 		sensorRepository.save(sensor); // user
 	}
 
 	@Transactional
 	public void patch(Sensor sensor, SensorValue value) {
-		if (StringUtils.isNotBlank(Integer.toString(value.get_id())))
-			sensor.set_id(value.get_id());
+		if (StringUtils.isNotBlank(Long.toString(value.getContId())))
+			sensor.setContId(value.getContId());
 		if (StringUtils.isNotBlank(value.getName()))
 			sensor.setName(value.getName());
-		if (StringUtils.isNotBlank(value.getTableName()))
-			sensor.setTableName(value.getTableName());
-		if (StringUtils.isNotBlank(value.getDataType()))
-			sensor.setDataType(value.getDataType());
 	}
 
 	@Transactional

@@ -29,13 +29,13 @@
               <tbody>
                 <tr
                   class="text-center"
-                  th:object="${store}"
-                  th:each="store: ${stores}"
-                  th:attr="data-href=@{/v/stores/__${store.id}__}"
+                  th:object="${farm}"
+                  th:each="farm: ${farms}"
+                  th:attr="data-href=@{/v/farms/__${farm.id}__}"
                 >
                   <td th:text="*{ id }"></td>
                   <td th:text="*{ name }"></td>
-                  <td th:text="*{ storeBusiness }"></td>
+                  <td th:text="*{ farmBusiness }"></td>
                   <td th:text="*{ createTimestamp }"></td>
                   <td th:text="*{ del ? 'Y' : 'N' }"></td>
                 </tr>

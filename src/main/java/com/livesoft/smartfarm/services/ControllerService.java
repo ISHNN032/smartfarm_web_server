@@ -26,21 +26,16 @@ public class ControllerService {
 
 	@Transactional
 	public void save(ControllerValue value) {
-		Controller controller = Controller.builder()._id(value.get_id()).name(value.getName())
-				.tableName(value.getTableName()).dataType(value.getDataType()).build(); // ->
+		Controller controller = Controller.builder().farmId(value.getFarmId()).name(value.getName()).build(); // ->
 		controllerRepository.save(controller); // user
 	}
 
 	@Transactional
 	public void patch(Controller controller, ControllerValue value) {
-		if (StringUtils.isNotBlank(Integer.toString(value.get_id())))
-			controller.set_id(value.get_id());
+		if (StringUtils.isNotBlank(Long.toString(value.getFarmId())))
+			controller.setFarmId(value.getFarmId());
 		if (StringUtils.isNotBlank(value.getName()))
 			controller.setName(value.getName());
-		if (StringUtils.isNotBlank(value.getTableName()))
-			controller.setTableName(value.getTableName());
-		if (StringUtils.isNotBlank(value.getDataType()))
-			controller.setDataType(value.getDataType());
 	}
 
 	@Transactional

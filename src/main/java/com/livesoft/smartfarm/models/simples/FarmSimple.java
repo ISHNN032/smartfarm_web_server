@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Getter @Setter
-public class StoreSimple {
+public class FarmSimple {
 	
 	private Long id;
 	
@@ -17,13 +17,13 @@ public class StoreSimple {
 	private String name;
 	
 	@Schema(description = "업종")
-	private String storeBusiness;
+	private String farmBusiness;
 	
 	@Builder
-	public StoreSimple(Long id, Long userId, String name, String storeBusiness) {
+	public FarmSimple(Long id, Long userId, String name, String farmBusiness) {
 		this.id = id;
 		this.userId = userId;
 		this.name = name;
-		this.storeBusiness = storeBusiness;
+		this.farmBusiness = farmBusiness;
 	}
 }

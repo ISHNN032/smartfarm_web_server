@@ -31,8 +31,7 @@
                   th:each="controller: ${controllers}"
                   th:attr="data-href=@{/v/controllers/__${controller.id}__}"
                 >
-                  <td th:text="*{ _id }"></td>
-                  <td th:text="*{ contId }"></td>
+                  <td th:text="*{ farmId }"></td>
                   <td th:text="*{ name }"></td>
                 </tr>
               </tbody>

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.livesoft.smartfarm.mapper.StoreMapper">
-	<select id="findById" resultType="Store" parameterType="Long">
-		SELECT * FROM store WHERE id = #{id}
+<mapper namespace="com.livesoft.smartfarm.mapper.FarmMapper">
+	<select id="findById" resultType="Farm" parameterType="Long">
+		SELECT * FROM farm WHERE id = #{id}
 	</select>
 </mapper>

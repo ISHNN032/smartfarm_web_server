@@ -8,22 +8,22 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.livesoft.smartfarm.services.StoreService;
+import com.livesoft.smartfarm.services.FarmService;
 
 import lombok.RequiredArgsConstructor;
 
-@RequestMapping("/v/stores")
+@RequestMapping("/v/farms")
 @RequiredArgsConstructor
 @Controller
-public class VStoreController {
+public class VFarmController {
 	
-	private final StoreService storeService;
+	private final FarmService farmService;
 	
 	@GetMapping("")
 	public String selectStores(Model model, @PageableDefault(page=0, size=5, sort="id", direction = Sort.Direction.DESC) Pageable pageable) {
-		model.addAttribute("stores", storeService.findAll(pageable));
-		model.addAttribute("currentPage", "store");
-		return "content/store";
+		model.addAttribute("farms", farmService.findAll(pageable));
+		model.addAttribute("currentPage", "farm");
+		return "content/farm";
 	}
 	
 }

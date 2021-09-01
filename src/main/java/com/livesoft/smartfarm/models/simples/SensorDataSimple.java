@@ -7,9 +7,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class DataWindSSimple {
-
-	private Long id;
+public class SensorDataSimple {
+	@Schema(description = "센서 ID")
+	private Long sensorId;
 
 	@Schema(description = "상태")
 	private int state;
@@ -18,8 +18,8 @@ public class DataWindSSimple {
 	private float value;
 
 	@Builder
-	public DataWindSSimple(Long id, int state, float value) {
-		this.id = id;
+	public SensorDataSimple(Long sensorId, int state, float value) {
+		this.sensorId = sensorId;
 		this.state = state;
 		this.value = value;
 	}

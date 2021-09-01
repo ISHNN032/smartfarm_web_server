@@ -23,35 +23,20 @@ import lombok.Setter;
 @DynamicInsert
 public class Controller extends BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = 1;// ???????
-
-	@Column(nullable = false, unique = true)
-	private int _id;
-
 	@Column(nullable = false)
-	private int contId;
+	private Long farmId;
 
 	@Column()
 	private String name;
 
-	@Column(nullable = false, length = 10)
-	private String tableName;
-
-	@Column(nullable = false, length = 8)
-	private String dataType;
-
 	@Builder
-	public Controller(int _id, int contId, String name, String tableName, String dataType) {
-		this._id = _id;
-		this.contId = contId;
+	public Controller(Long farmId, String name) {
+		this.farmId = farmId;
 		this.name = name;
-		this.tableName = tableName;
-		this.dataType = dataType;
 	}
 
 	@Override
 	public ControllerSimple getSimple() {
-		return ControllerSimple.builder().id(getId())._id(_id).contId(contId).name(name).tableName(tableName)
-				.dataType(dataType).build();
+		return ControllerSimple.builder().farmId(farmId).name(name).build();
 	}
 }

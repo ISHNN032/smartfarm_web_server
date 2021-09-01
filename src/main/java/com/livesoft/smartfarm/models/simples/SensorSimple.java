@@ -8,31 +8,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class SensorSimple {
-
-	private Long id;
-
-	@Schema(description = "ID")
-	private int _id;
-
 	@Schema(description = "컨트롤러ID")
-	private int contId;
+	private Long contId;
 
 	@Schema(description = "이름")
 	private String name;
 
-	@Schema(description = "tabel이름")
-	private String tableName;
-
-	@Schema(description = "타입")
-	private String dataType;
-
 	@Builder
-	public SensorSimple(Long id, int _id, int contId, String name, String tableName, String dataType) {
-		this.id = id;
-		this._id = _id;
+	public SensorSimple(Long contId, String name) {
 		this.contId = contId;
 		this.name = name;
-		this.tableName = tableName;
-		this.dataType = dataType;
 	}
 }

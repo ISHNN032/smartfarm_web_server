@@ -23,35 +23,20 @@ import lombok.Setter;
 @DynamicInsert
 public class Sensor extends BaseEntity implements Serializable {
 
-	private static final long serialVersionUID = 0;// ???????
-
-	@Column(nullable = false, unique = true)
-	private int _id;
-
 	@Column(nullable = false)
-	private int contId;
+	private Long contId;
 
 	@Column()
 	private String name;
 
-	@Column(nullable = false, length = 10)
-	private String tableName;
-
-	@Column(nullable = false, length = 8)
-	private String dataType;
-
 	@Builder
-	public Sensor(int _id, int contId, String name, String tableName, String dataType) {
-		this._id = _id;
+	public Sensor(Long contId, String name) {
 		this.contId = contId;
 		this.name = name;
-		this.tableName = tableName;
-		this.dataType = dataType;
 	}
 
 	@Override
 	public SensorSimple getSimple() {
-		return SensorSimple.builder().id(getId())._id(_id).contId(contId).name(name).tableName(tableName)
-				.dataType(dataType).build();
+		return SensorSimple.builder().contId(contId).name(name).build();
 	}
 }

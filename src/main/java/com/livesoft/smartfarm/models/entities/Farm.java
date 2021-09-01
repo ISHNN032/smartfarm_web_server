@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.livesoft.smartfarm.models.simples.StoreSimple;
+import com.livesoft.smartfarm.models.simples.FarmSimple;
 
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -22,33 +22,33 @@ import lombok.Setter;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Getter @Setter
-@Entity(name = "store")
+@Entity(name = "farm")
 @DynamicUpdate
-public class Store extends BaseEntity implements Serializable {
+public class Farm extends BaseEntity implements Serializable {
 	
 	private static final long serialVersionUID = 3321044622977739271L;
 	
 	@JsonBackReference
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "FK_STORE_USER"))
+	@JoinColumn(name = "user_id", foreignKey = @ForeignKey(name = "FK_FARM_USER"))
 	private User user;
 	
 	@Column(nullable=false, length = 100)
 	private String name;
 
 	@Column(length = 30)
-	private String storeBusiness;	
+	private String farmBusiness;	
 	
 	@Builder
-	private Store(User user, String name, String storeBusiness) {
+	private Farm(User user, String name, String farmBusiness) {
 		this.user = user;
 		this.name = name;
-		this.storeBusiness = storeBusiness;
+		this.farmBusiness = farmBusiness;
 	}
 
 	@Override
-	public StoreSimple getSimple() {
-		return StoreSimple.builder().id(getId()).name(name).storeBusiness(storeBusiness)
+	public FarmSimple getSimple() {
+		return FarmSimple.builder().id(getId()).name(name).farmBusiness(farmBusiness)
 				.userId(user != null ? user.getId() : null).build();
 	}
 }

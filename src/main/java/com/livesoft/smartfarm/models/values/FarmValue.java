@@ -4,10 +4,9 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 
-@Schema(description = "가게")
+@Schema(description = "농장")
 @Getter @Setter
-public class StoreValue {
-	
+public class FarmValue {
 	@Schema(description = "사용자 id")
 	private Long userId;
 	
@@ -15,6 +14,6 @@ public class StoreValue {
 	private String name;
 	
 	@Schema(description = "업종")
-	private String storeBusiness;
+	private String farmBusiness;
 	
 }

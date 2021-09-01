@@ -33,11 +33,8 @@
                   th:each="sensor: ${sensors}"
                   th:attr="data-href=@{/v/sensors/__${sensor.id}__}"
                 >
-                  <td th:text="*{ _id }"></td>
                   <td th:text="*{ contId }"></td>
                   <td th:text="*{ name }"></td>
-                  <td th:text="*{ tableName }"></td>
-                  <td th:text="*{ dataType }"></td>
                 </tr>
               </tbody>
             </table>

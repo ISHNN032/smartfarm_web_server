@@ -8,30 +8,15 @@ import lombok.Setter;
 @Getter
 @Setter
 public class ControllerSimple {
-
-	private Long id;
-
-	@Schema(description = "ID")
-	private int _id;
-
-	@Schema(description = "컨트롤러ID")
-	private int contId;
+	@Schema(description = "농장ID")
+	private Long farmId;
 
 	@Schema(description = "이름")
 	private String name;
 
-	@Schema(description = "tabel이름")
-	private String tableName;
-
-	@Schema(description = "타입")
-	private String dataType;
-
 	@Builder
-	public ControllerSimple(Long id, int _id, int contId, String name, String tableName, String dataType) {
-		this._id = _id;
-		this.contId = contId;
+	public ControllerSimple(Long farmId, String name) {
+		this.farmId = farmId;
 		this.name = name;
-		this.tableName = tableName;
-		this.dataType = dataType;
 	}
 }
